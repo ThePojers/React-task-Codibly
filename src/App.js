@@ -1,22 +1,21 @@
 import React from 'react';
+import MainLayout from './components/layout/MainLayout/MainLayout';
+import LoginPage from './components/views/LoginPage/LoginPage';
+import {BrowserRouter, Route, Switch} from 'react-router-dom';
+import { Provider } from 'react-redux';
+import store from './redux/store';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Provider store={store}>
+      <BrowserRouter>
+        <MainLayout >
+          <Switch>
+            <Route exact path={`${process.env.PUBLIC_URL}/`} component={LoginPage} />
+          </Switch>
+        </MainLayout>
+      </BrowserRouter>
+    </Provider>
   );
 }
 

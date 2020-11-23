@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import TextField from '@material-ui/core/TextField';
@@ -9,7 +9,6 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,8 +30,33 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function SignIn() {
+function SignIn() {
   const classes = useStyles();
+
+  const [errorBol, setErrorBol] = useState(false);
+
+  const [errorText, setErrorText] = useState('');
+
+  const [passwordValue, setPasswordValue] = useState('');
+
+  function validation(){
+    console.log(passwordValue);
+    if(passwordValue.length <= 8){
+      setErrorText('Password should have at least 8 characters, 1 number and one upper letter');
+      setErrorBol(true);
+    }
+    else if(!/\d/.test(passwordValue)){
+      setErrorText('Password should have at least 8 characters, 1 number and one upper letter');
+      setErrorBol(true);
+    }
+    else if (passwordValue === passwordValue.toLowerCase()){
+      setErrorText('Password should have at least 8 characters, 1 number and one upper letter');
+      setErrorBol(true);
+    } else {
+      setErrorText('');
+      setErrorBol(false);
+    }
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -53,7 +77,10 @@ export default function SignIn() {
             autoComplete="email"
             autoFocus
           />
+
           <TextField
+            error={errorBol}
+            helperText={errorText}
             variant="outlined"
             margin="normal"
             required
@@ -63,6 +90,8 @@ export default function SignIn() {
             type="password"
             id="password"
             autoComplete="current-password"
+            value={passwordValue}
+            onChange={e => setPasswordValue(e.target.value)}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
@@ -74,6 +103,11 @@ export default function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
+
+            onClick={event => {
+              event.preventDefault();
+              validation();
+            }}
           >
             Sign In
           </Button>
@@ -94,3 +128,5 @@ export default function SignIn() {
     </Container>
   );
 }
+
+export default SignIn;

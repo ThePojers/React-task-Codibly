@@ -40,7 +40,6 @@ function SignIn() {
   const [passwordValue, setPasswordValue] = useState('');
 
   function validation(){
-    console.log(passwordValue);
     if(passwordValue.length <= 8){
       setErrorText('Password should have at least 8 characters, 1 number and one upper letter');
       setErrorBol(true);
@@ -103,7 +102,6 @@ function SignIn() {
             variant="contained"
             color="primary"
             className={classes.submit}
-
             onClick={event => {
               event.preventDefault();
               validation();

@@ -9,6 +9,7 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import { dataProcess } from '../../../utils/Axios';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -39,7 +40,11 @@ function SignIn() {
 
   const [passwordValue, setPasswordValue] = useState('');
 
-  function validation(){
+  // const loginValidation = useEffect(() => {
+
+  // }, [dataProcess()]);
+
+  function passwordValidation(){
     if(passwordValue.length <= 8){
       setErrorText('Password should have at least 8 characters, 1 number and one upper letter');
       setErrorBol(true);
@@ -52,8 +57,10 @@ function SignIn() {
       setErrorText('Password should have at least 8 characters, 1 number and one upper letter');
       setErrorBol(true);
     } else {
+      console.log('lol');
       setErrorText('');
       setErrorBol(false);
+
     }
   }
 
@@ -104,7 +111,7 @@ function SignIn() {
             className={classes.submit}
             onClick={event => {
               event.preventDefault();
-              validation();
+              passwordValidation();
             }}
           >
             Sign In

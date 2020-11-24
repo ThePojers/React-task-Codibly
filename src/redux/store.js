@@ -1,19 +1,23 @@
-import {createStore, combineReducers} from 'redux';
-import globalReducer from './globalRedux';
+import {combineReducers, createStore, applyMiddleware} from 'redux';
+import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
+import axiosReducer from './axiosRedux';
 
-// define initial state and shallow-merge initial global
+// define initial state and shallow-merge initial data
 const initialState = {
   global: {
+    data: {},
     loading: {
       active: false,
       error: false,
+      fetch: false,
     },
   },
 };
 
 // define reducers
 const reducers = {
-  global: globalReducer,
+  global: axiosReducer,
 };
 
 // add blank reducers for initial state properties without reducers
@@ -25,16 +29,13 @@ Object.keys(initialState).forEach(item => {
 
 const combinedReducers = combineReducers(reducers);
 
-const storeReducer = (state, action) => {
-  const modifiedState = globalReducer(state, action);
-  return combinedReducers(modifiedState, action);
-};
-
 // create store
 const store = createStore(
-  storeReducer,
+  combinedReducers,
   initialState,
-  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+  composeWithDevTools(
+    applyMiddleware(thunk)
+  )
 );
 
 export default store;

@@ -9,7 +9,8 @@ import Grid from '@material-ui/core/Grid';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
-import { dataProcess } from '../../../utils/Axios';
+import Alert from '@material-ui/lab/Alert';
+import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,7 +32,8 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function SignIn() {
+function SignIn({fetchData, loading, fetchDataError}) {
+
   const classes = useStyles();
 
   const [errorBol, setErrorBol] = useState(false);
@@ -40,11 +42,7 @@ function SignIn() {
 
   const [passwordValue, setPasswordValue] = useState('');
 
-  // const loginValidation = useEffect(() => {
-
-  // }, [dataProcess()]);
-
-  function passwordValidation(){
+  function passwordValidation (){
     if(passwordValue.length <= 8){
       setErrorText('Password should have at least 8 characters, 1 number and one upper letter');
       setErrorBol(true);
@@ -60,7 +58,11 @@ function SignIn() {
       console.log('lol');
       setErrorText('');
       setErrorBol(false);
-
+      if(passwordValue == 'Niedziała123'){
+        fetchDataError();
+      } else {
+        fetchData();
+      }
     }
   }
 
@@ -127,11 +129,17 @@ function SignIn() {
                 {'Don\'t have an account? Sign Up'}
               </Link>
             </Grid>
+            {loading.fetch ? <Alert severity="success">This is a success alert — check it out!</Alert> : ''}
+            {loading.error ? <Alert severity="error">This is an error alert — check it out!</Alert> : ''}
           </Grid>
         </form>
       </div>
     </Container>
   );
 }
-
+SignIn.propTypes = {
+  loading: PropTypes.object,
+  fetchData: PropTypes.func,
+  fetchDataError: PropTypes.func,
+};
 export default SignIn;

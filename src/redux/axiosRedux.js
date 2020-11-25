@@ -34,7 +34,7 @@ export const fetchFromAPI = () => {
 export const fetchFromAPIError = () => {
   return (dispatch, getState) => {
     dispatch(fetchStarted());
-  
+
     Axios
       .get(`https://run.mocky.io/v3/6d324f9e-4ecd-4d56-8f87-bd8c81d1782e`)
       .then(res => {

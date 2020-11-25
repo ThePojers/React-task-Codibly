@@ -1,5 +1,5 @@
 import { connect } from 'react-redux';
-import LoginPage from './LoginPage';
+import  LoginPage  from './LoginPage.tsx';
 import { fetchFromAPI, getData, getLoadingState, fetchFromAPIError } from '../../../redux/axiosRedux';
 
 const mapStateToProps = (state) => ({

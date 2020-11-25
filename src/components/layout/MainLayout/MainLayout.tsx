@@ -1,7 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-const MainLayout = ({children}) => {
+interface Props {
+  children: any,
+}
+
+
+const MainLayout: React.FC<Props> = ({children}) => {
 
   return (
     <div>

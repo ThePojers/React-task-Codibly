@@ -10,7 +10,6 @@ import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import Alert from '@material-ui/lab/Alert';
-import PropTypes from 'prop-types';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -31,8 +30,16 @@ const useStyles = makeStyles((theme) => ({
     margin: theme.spacing(3, 0, 2),
   },
 }));
+interface Props {
+  fetchData: () => void,
+  loading: {
+    fetch: boolean,
+    error: boolean,
+  },
+  fetchDataError: () => void,
+}
 
-function SignIn({fetchData, loading, fetchDataError}) {
+ const SingIn: React.FC<Props> = ({fetchData, loading, fetchDataError}) => {
 
   const classes = useStyles();
 
@@ -137,9 +144,6 @@ function SignIn({fetchData, loading, fetchDataError}) {
     </Container>
   );
 }
-SignIn.propTypes = {
-  loading: PropTypes.object,
-  fetchData: PropTypes.func,
-  fetchDataError: PropTypes.func,
-};
-export default SignIn;
+
+
+export default SingIn;
